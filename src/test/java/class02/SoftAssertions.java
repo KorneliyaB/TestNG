@@ -1,5 +1,6 @@
 package class02;
 
+import Utils.CommonMethods;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,27 +12,24 @@ import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
 
-public class SoftAssertions {
+public class SoftAssertions extends CommonMethods {
     //    percondition
     //    login into the syntax HRMS APP
 //    verify that the Welcome message is displayed
 //    verify that the message is  "Welcome Admin"
-    public static WebDriver driver;
-    @BeforeMethod
+
+    @BeforeMethod(alwaysRun = true)
     public void OpenBrowserAndNavigate(){
-        driver= new ChromeDriver();
-        driver.get("http://hrm.syntaxtechs.net/humanresources/symfony/web/index.php/auth/login");
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        openBrowserAndNavigateToURL("http://hrm.syntaxtechs.net/humanresources/symfony/web/index.php/auth/login","chrome");
     }
 
     //    post conditions
-    @AfterMethod
-    public void closeBrowser(){
-//        driver.quit();
+    @AfterMethod(alwaysRun = true)
+    public void quitBrowser(){
+        driver.quit();
     }
 
-    @Test
+    @Test(groups = "regression")
     public void verifyTheWelcomeMessage(){
 //        /        send username
         WebElement userName = driver.findElement(By.xpath("//input[@name='txtUsername']"));
